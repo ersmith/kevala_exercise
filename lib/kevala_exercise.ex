@@ -40,6 +40,16 @@ defmodule KevalaExercise do
 
   @doc """
   Dedupes records based on the dupication strategy.
+
+  Example:
+    iex> [[1, 1, "jdoe@example.com", 1], [1, 1, "jdoe@example.com", 1]] |> KevalaExercise.dedupe(:email)
+    [[1, 1, "jdoe@example.com", 1]]
+
+    iex> [[1, 1, "jdoe1@example.com", 111-111-1111], [1, 1, "jdoe@example.com", 111-111-1111]] |> KevalaExercise.dedupe(:phone)
+    [[1, 1, "jdoe1@example.com", 111-111-1111]]
+
+    iex> [[1, 1, "jdoe1@example.com", 111-111-1113], [1, 1, "jdoe1@example.com", 111-111-1111], [1, 1, "jdoe@example.com", 111-111-1111]] |> KevalaExercise.dedupe(:email_or_phone)
+    [[1, 1, "jdoe1@example.com", 111-111-1113]]
   """
   def dedupe(stream, :email) do
     stream
